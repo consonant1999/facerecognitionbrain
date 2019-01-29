@@ -68,8 +68,6 @@ class App extends Component {
   }
 
   displayFaceBoxes = (boxes) => {
-    console.log(boxes)
-
     this.setState({boxes: boxes})
   }
 
@@ -79,32 +77,32 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({imageUrl: this.state.input})
-      fetch('https://salty-bayou-13987.herokuapp.com/imageurl', {
-        method: 'post',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          input: this.state.input
-        })
+    fetch('https://salty-bayou-13987.herokuapp.com/imageurl', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        input: this.state.input
       })
-      .then(response => response.json())
-      .then(response => {
-        if(response) {
-          fetch('https://salty-bayou-13987.herokuapp.com/image', {
-            method: 'put',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-              id: this.state.user.id
-            })
+    })
+    .then(response => response.json())
+    .then(response => {
+      if(response) {
+        fetch('https://salty-bayou-13987.herokuapp.com/image', {
+          method: 'put',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            id: this.state.user.id
           })
-            .then(response => response.json())
-            .then(count => {
-              this.setState(Object.assign(this.state.user, {entries: count}))
-            })
-            .catch(console.log)
-        }
-        this.displayFaceBoxes(this.caclculateFaceLocations(response))
-      })
-      .catch(err => console.log(err))
+        })
+          .then(response => response.json())
+          .then(count => {
+            this.setState(Object.assign(this.state.user, {entries: count}))
+          })
+          .catch(console.log)
+      }
+      this.displayFaceBoxes(this.caclculateFaceLocations(response))
+    })
+    .catch(err => console.log(err))
   }
 
   onRouteChange = (route) => {
@@ -121,8 +119,8 @@ class App extends Component {
     return (
       <div className="App">
         <Particles className='particles'
-              params={particlesOptions}
-            />
+          params={particlesOptions}
+        />
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange}/>
         { route === 'home'
           ? <div>
@@ -140,7 +138,7 @@ class App extends Component {
           )
         }
       </div>
-    );
+    )
   }
 }
 
